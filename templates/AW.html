@@ -190,13 +190,129 @@
           </center>
         </p>
        
-    
+        <h4>Geographic Distribution</h4>
+        <p>
+          Interstingly, as the descriptions of accidents become longer, a higher proportion of accidents are fatal.
+          <center>
+            <a href="/map"><img src="static/images/map.png" width="80%"></a>
+          </center>
+        </p>
+
       <h2 id="supervised">Supervised Learning</h2>
         <p>
           Sklearn grid searching with k-folds cross validation is used to find the best hyperparameters for each model. Models are tested on classification into three groups (Fatality, Injury, Medical) as well as Fatal or Near Miss. When possible, performance between Tf-idf and tf matrices is compared. Final performance is judged on a holdout data set. For simplicity and interpretability, only the binary classification results are shown.
         </p>
       
+      <h2 id="text">Text Classification</h2>
+        <center>
+        <img src="static/images/boosting_n_score.png" width="80%">
+        </center>
+      <h4>Bagging</h4>
+        <p>
+          Below are the most important words for predicting the outcome of an accident. It is worth noting that the model does not assert a positive or negative correlation, just predictive importance.
+        </p>
+          <center>
+            <img src="static/images/bagging_features_horiz.png" width="80%">
+          </center>
+      <h4>Naive Bayes</h4>
+        <p>
+          Below, mock descriptions were fed into the naive bayes model with the resulting predictions.
+        </p><p>
+          <code>
+          There was a diabetic on our trip. He forgot his insulin. He ended up in DKA, so we pulled off of the the riveLuckily we had cell service, so we called 911. He got rushed to the ER, but the docs said he'd be okay even though he had been near death earlier that day. Another person on the trip was doing a bunch of drugs like xanax, accutane, tramadol and propecia. What a combo! They ended up falling in the river.
+          </code>
+        </p>
+        <center>
+        <table style="width: 30%">
+          <tr>
+            <th></th>
+            <th>Medical</th>
+            <th>Injury</th>
+            <th>Fatality</th>
+          </tr>
+          <tr>
+            <th>Predicted Probaility</th>
+            <td>99.9%</td>
+            <td>0.0%</td>
+            <td>0.0%</td>
+          </tr>
+        </table>
+        </center>
+        <p></p>
+        <code>
+          It was the end of the day, and everyone was tired. The raft guide decided to drop into the last hole sideways, and dump trucked everyone into the river. There wasn't much rapid left at the point but most people found a rock or two to hit. Sarah bruised her leg. Sam hit his head. I got my foot trapped in the webbing of raft. Everyone was okay, but a few of us had to get stitches.
+        </code>
+        <center>
+        <table style="width: 30%">
+          <tr>
+            <th></th>
+            <th>Medical</th>
+            <th>Injury</th>
+            <th>Fatality</th>
+          </tr>
+          <tr>
+            <th>Predicted Probaility</th>
+            <td>0.1%</td>
+            <td>0.1%</td>
+            <td>99.8%</td>
+          </tr>
+        </table>
+        </center>
+        <p></p>
+        <code>
+          It could have been a good day of kayaking. The water levels were very high, but everyone was stoked. On the first rapid Jack capsized and swam into a strainer. Meanwhile, Jill got pinned in a sieve. Both spent about 10 minutes underwater before we could get to them. We performed CPR, but they we both blue. We called the sheriff, the ambulance came, and we cried a bunch.
+        </code>
+        <center>
+        <table style="width: 30%">
+          <tr>
+            <th></th>
+            <th>Medical</th>
+            <th>Injury</th>
+            <th>Fatality</th>
+          </tr>
+          <tr>
+            <th>Predicted Probaility</th>
+            <td>0.25%</th>
+            <td>0.15%</th>
+            <td>99.6%</th>
+          </tr>
+        </table>
+        </center>
+        <p></p>
+        <p>        
+        Finally, for each category of incident, the top 100 words that made each category more and less likely were generated. Below is a curated subset of those lists.
+        </p>
+        <center>
+        <table style="width: 80%">
+          <tr>
+            <th></th>
+            <th>Increase Liklihood</th>
+            <th>Decrease Liklihood</th>
+          </tr>
+          <tr>
+            <th>Medical</th>
+            <td>kayaker overdose, new, head, alcohol, xanax, tramadol, fall, rope</td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Injury</th>
+            <td>man, pin, foot, strainer, group, kayaker, march</td>
+            <td>farmer wetsuit, near drowning, new york, large kayak</td>
+          </tr>
+          <tr>
+            <th>Fatality</th>
+            <td>rock, dam, drown, pin, get help, search, rescue, time, large flow</td>
+            <td>competent group, thank, support, train, feel emotion, professional sar, respond</td>
+          </tr>
+        </table>
+      </center>
 
+      <h2 id="log">Classification</h2>
+      <h4>Logistic Regression</h4>
+      <h4>Random Forest</h4>
+      <h4>Stacked</h4>
+
+      <h4 id"performance>Model Performance</h4>
         
     </div><!-- /.container -->
 

@@ -33,6 +33,9 @@ def lda():
 def aw():
     return render_template('AW.html')
 
+@app.route('/map')
+def map():
+    return render_template('map.html')
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=8080, threaded=True, debug=False, ssl_context = context)
