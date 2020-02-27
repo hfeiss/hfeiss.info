@@ -9,7 +9,6 @@ paths = Root(__file__).paths()
 
 app = Flask(__name__)
 
-
 # home page: about
 @app.route('/')
 def index():
@@ -25,17 +24,21 @@ def contact():
 def about():
     return render_template('projects.html')
 
+
 @app.route('/lda')
 def lda():
     return render_template('LDAvis.html')
+
 
 @app.route('/AW')
 def aw():
     return render_template('AW.html')
 
+
 @app.route('/map')
 def map():
     return render_template('map.html')
+
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=8080, threaded=True, debug=False, ssl_context = context)
