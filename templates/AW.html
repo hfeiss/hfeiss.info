@@ -75,7 +75,7 @@
         <p>
           The database is created from a combination of user submitted forms and web-scrapped articles. As such, it is supremely messy. 
           <center>
-            <img src="static/images/messy_data.png" width="80%">
+            <img src="static/images/messy_data.png" width="60%" class="img-fluid">
           </center>
         </p>
         <p>
@@ -177,7 +177,7 @@
           <p></p>
           Below, the first two components are plotted with each accident labeled as a fatality, injury, or a medical emergency.
           <center>
-            <img src="static/images/pca_targets_idf.png" width="80%">
+            <img src="static/images/pca_targets_idf.png" width="60%" class="img-fluid">
           </center>
         </p>
 
@@ -185,7 +185,7 @@
         <p>
           As expected, as the descriptions of accidents become longer, a higher proportion of accidents are fatal.
           <center>
-            <img src="static/images/description_len_death.png" width="80%">
+            <img src="static/images/description_len_death.png" width="60%" class="img-fluid">
           </center>
         </p>
        
@@ -193,7 +193,7 @@
         <p>
           The number of accidents is likely proportional to the amount of whitewater recreation in a given state.
           <center>
-            <a href="/map"><img src="static/images/map.png" width="80%"></a>
+            <a href="/map"><img src="static/images/map.png" width="60%" class="img-fluid"></a>
           </center>
         </p>
 
@@ -204,21 +204,21 @@
       
       <h2 id="text">Text Classification</h2>
         <center>
-        <img src="static/images/boosting_n_score.png" width="80%">
+        <img src="static/images/boosting_n_score.png" width="60%" class="img-fluid">
         </center>
       <h4>Bagging</h4>
         <p>
           Below are the most important words for predicting the outcome of an accident. It is worth noting that the model does not assert a positive or negative correlation, just predictive importance.
         </p>
           <center>
-            <img src="static/images/bagging_features_horiz.png" width="80%">
+            <img src="static/images/bagging_features_horiz.png" width="60%" class="img-fluid">
           </center>
       <h4>Naive Bayes</h4>
       <p>        
         After fitting a Naive Bayes model to the training data, for each category of incident, the top 100 words that made each category more and less likely are generated. Below is a curated subset of those lists.
       </p>
-      
-      <table class="table" style="width: 75%">
+      <center>
+      <table class="table" style="width: 40%">
         <thead class="thead-dark">
           <tr>
             <th ></th>
@@ -227,11 +227,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Medical</th>
-            <td>kayaker overdose, new, head, alcohol, xanax, tramadol, fall, rope</td>
-            <td></td>
-          </tr>
           <tr>
             <th scope="row">Injury</th>
             <td>man, pin, foot, strainer, group, kayaker, march</td>
@@ -244,6 +239,7 @@
           </tr>
         </tbody>
       </table>
+    </center>
         <p>
           Below, mock descriptions were fed into the naive bayes model with the resulting predictions.
         </p><p>
@@ -251,92 +247,111 @@
           There was a diabetic on our trip. He forgot his insulin. He ended up in DKA, so we pulled off of the the riveLuckily we had cell service, so we called 911. He got rushed to the ER, but the docs said he'd be okay even though he had been near death earlier that day. Another person on the trip was doing a bunch of drugs like xanax, accutane, tramadol and propecia. What a combo! They ended up falling in the river.
           </code>
         </p>
-        <center>
-          <table style="width: 30%; border: 1px solid gray;">
+      <center>
+        <table class="table" style="width: 30%">
+          <thead class="thead-dark">
             <tr>
-            <th></th>
-            <th>Medical</th>
-            <th>Injury</th>
-            <th>Fatality</th>
-          </tr>
-          <tr style="background-color: lightgray;">
-            <th>Predicted Probaility</th>
-            <td>99.9%</td>
-            <td>0.0%</td>
-            <td>0.0%</td>
-          </tr>
+              <th ></th>
+              <th >Medical</th>
+              <th >Injury</th>
+              <th >Fatality</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Predicted Probaility</th>
+              <td>99.9%</td>
+              <td>0.0%</td>
+              <td>0.0%</td>
+            </tr>
+          </tbody>
         </table>
-        </center>
+      </center>
         <p></p>
         <code>
           It was the end of the day, and everyone was tired. The raft guide decided to drop into the last hole sideways, and dump trucked everyone into the river. There wasn't much rapid left at the point but most people found a rock or two to hit. Sarah bruised her leg. Sam hit his head. I got my foot trapped in the webbing of raft. Everyone was okay, but a few of us had to get stitches.
         </code>
+
         <center>
-          <table style="width: 30%; border: 1px solid gray;">
-            <tr>
-            <th></th>
-            <th>Medical</th>
-            <th>Injury</th>
-            <th>Fatality</th>
-          </tr>
-          <tr style="background-color: lightgray;">
-            <th>Predicted Probaility</th>
-            <td>0.1%</td>
-            <td>0.1%</td>
-            <td>99.8%</td>
-          </tr>
-        </table>
+          <table class="table" style="width: 30%">
+            <thead class="thead-dark">
+              <tr>
+                <th ></th>
+                <th >Medical</th>
+                <th >Injury</th>
+                <th >Fatality</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Predicted Probaility</th>
+                <td>0.1%</td>
+                <td>0.1%</td>
+                <td>99.8%</td>
+              </tr>
+            </tbody>
+          </table>
         </center>
+
         <p></p>
         <code>
           It could have been a good day of kayaking. The water levels were very high, but everyone was stoked. On the first rapid Jack capsized and swam into a strainer. Meanwhile, Jill got pinned in a sieve. Both spent about 10 minutes underwater before we could get to them. We performed CPR, but they we both blue. We called the sheriff, the ambulance came, and we cried a bunch.
         </code>
+
         <center>
-        <table style="width: 30%; border: 1px solid gray;">
-          <tr>
-            <th></th>
-            <th>Medical</th>
-            <th>Injury</th>
-            <th>Fatality</th>
-          </tr>
-          <tr style="background-color: lightgray;">
-            <th>Predicted Probaility</th>
-            <td>0.25%</th>
-            <td>0.15%</th>
-            <td>99.6%</th>
-          </tr>
-        </table>
+          <table class="table" style="width: 30%">
+            <thead class="thead-dark">
+              <tr>
+                <th ></th>
+                <th >Medical</th>
+                <th >Injury</th>
+                <th >Fatality</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Predicted Probaility</th>
+                <td>0.25%</td>
+                <td>0.15%</td>
+                <td>99.6%</td>
+              </tr>
+            </tbody>
+          </table>
         </center>
-        <p></p>
 
       <h2 id="log">Classification</h2>
       <h4>Logistic Regression</h4>
       <p>
         A simple logistic model is fitted on the non-text features. This model performs better than the text analysis. After removing features without predictive strength, the coefficients and their p-values are listed below. The variance inflation factors are all 1.3 or below.
       </p>
+
       <center>
-        <table style="width: 30%; border: 1px solid gray;">
-          <tr>
-          <th>Predictor</th>
-          <th>Coefficient</th>
-          <th>p-value</th>
-        </tr>
-        <tr style="background-color: lightgray;">
-          <td>River Level</td>
-          <td>0.27</td>
-          <td>0.050</td>
-        </tr>
-        <tr>
-          <td>River Difficulty</td>
-          <td>0.45</td>
-          <td>0.003</td>
-        </tr>
-        <tr style="background-color: lightgray;">
-          <td>Paddler Experience</td>
-          <td>-0.34</td>
-          <td>0.034</td>
-        </tr>
-      </table>
+        <table class="table" style="width: 30%">
+          <thead class="thead-dark">
+            <tr>
+              <th ></th>
+              <th >Coefficient</th>
+              <th >p-value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">River Level</th>
+              <td>0.27</td>
+              <td>0.050</td>
+            </tr>
+            <tr>
+              <th scope="row">River Difficulty</th>
+              <td>0.45</td>
+              <td>0.003</td>
+            </tr>
+            <tr>
+              <th scope="row">Paddler Experience</th>
+              <td>-0.34</td>
+              <td>0.034</td>
+            </tr>
+          </tbody>
+        </table>
       </center>
 
       <h4>Stacked Model</h4>
@@ -344,56 +359,67 @@
       Adding the Naive Bayes prediction as a feature in the logistic model, oddly, decreases performance.
       </p>
       <h2 id"performance>Model Performance</h2>
+
       <center>
-        <table style="width: 30%; border: 1px solid gray;">
-          <tr style="background-color: lightgray;">
-            <th>Model</th>
-            <th>Precision</th>
-            <th>Recall</th>
-            <th>Accuracy</th>
-          </tr>
-          <tr>
-            <td>AdaBoost</td>
-            <td>86%</td>
-            <td>92%</td>
-            <td>86%</td>
-          </tr>
-          <tr style="background-color: lightgray;">
-            <td>Bagging</td>
-            <td>87%</td>
-            <td>92%</td>
-            <td>87%</td>
-          </tr>
-          <tr>
-            <td>Naive Bayes</td>
-            <td>76%</td>
-            <td>95%</td>
-            <td>79%</td>
-          </tr>
-          <tr style="background-color: lightgray;">
-            <td>Random Forest (NLP)</td>
-            <td>77%</td>
-            <td>98%</td>
-            <td>81%</td>
-          </tr>
-          <tr>
-            <td>Random Forest (Numerical)</td>
-            <td>87%</td>
-            <td>97%</td>
-            <td>87%</td>
-          </tr>
-          <tr style="background-color: lightgray;">
-            <td>Logistic Classification</td>
-            <td>92%</td>
-            <td>100%</td>
-            <td>92%</td>
-          </tr>
-          <tr>
-            <td>Stacked Classification</td>
-            <td>88%</td>
-            <td>92%</td>
-            <td>84%</td>
-          </tr>
+        <table class="table" style="width: 30%">
+          <thead class="thead-dark">
+            <tr>
+              <th ></th>
+              <th >Precision</th>
+              <th >Recall</th>
+              <th >Accuracy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">AdaBoost</th>
+              <td>86%</td>
+              <td>92%</td>
+              <td>86%</td>
+            </tr>
+            <tr>
+              <th scope="row">Bagging</th>
+              <td>87%</td>
+              <td>92%</td>
+              <td>87%</td>
+            </tr>
+            <tr>
+              <th scope="row">Naive Bayes</th>
+              <td>76%</td>
+              <td>95%</td>
+              <td>79%</td>
+            </tr>
+            <tr>
+              <th scope="row">Random Forest (NLP)</th>
+              <td>77%</td>
+              <td>98%</td>
+              <td>81%</td>
+            </tr>
+            <tr>
+              <th scope="row">Random Forest (Numerical)</th>
+              <td>87%</td>
+              <td>97%</td>
+              <td>87%</td>
+            </tr>
+            <tr>
+              <th scope="row">Logistic Classification</th>
+              <td>92%</td>
+              <td>100%</td>
+              <td>92%</td>
+            </tr>
+            <tr>
+              <th scope="row">Logistic Regression</th>
+              <td>88%</td>
+              <td>92%</td>
+              <td>84%</td>
+            </tr>
+            <tr>
+              <th scope="row">Stacked Classification</th>
+              <td>88%</td>
+              <td>92%</td>
+              <td>84%</td>
+            </tr>
+          </tbody>
         </table>
       </center>
 
@@ -402,8 +428,8 @@
         Combining the information from clustering, topic modeling, natural language processing, and logistic modeling, a few conclusions can be made. However, mostly the data supports existing knowledge in the whitewater community.
       </p>
       <center>
-      <img src="static/images/level_diff_death_2.png" width="80%">
-      <img src="static/images/exper_age_death.png" width="80%">
+      <img src="static/images/level_diff_death_2.png" width="60%" class="img-fluid">
+      <img src="static/images/exper_age_death.png" width="60%" class="img-fluid">
       </center>
       <li>Competent group - more than any other, this phrase decreased the likelihood of a prediction for death. Always make sure that your whole group is skilled enough and prepared for the river.</li>
       <li>Wetsuits reduce the liklihood of injury</li>
