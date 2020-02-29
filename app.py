@@ -40,6 +40,11 @@ def map():
     return render_template('map.html')
 
 
+@app.route('/recgov')
+def recgov():
+    return render_template('recgov.html')
+
+
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=8080, threaded=True, debug=False, ssl_context = context)
     app.run(host='0.0.0.0', port=8080, threaded=True, debug=True)

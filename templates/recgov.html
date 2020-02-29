@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>hfeiss | AWAD</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/starter-template.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!-- [if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]
+    <script src="../static/js/ie-emulation-modes-warning.js"></script> -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- [if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif] -->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">American Whitewater Accident Database</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">About</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div>
+
+      <h2 id="background">Background</h2>    
+        <p>
+          The American Whitewater Accident Database catalogs over 2,400 fatalities and close calls on whitewater rivers dating back to 1972.
+          <p></p>
+          The project was initiated in 1975 when Charlie Walbridge observed a fatality due to foot entrapment at a slalom race. Ever since, the American Whitewater journal has collected incident reports and shared the lessons learned. In 2017, the collection of accidents was refined and made available for download on <a href="https://www.americanwhitewater.org/content/Accident/view/">American Whitewater's website</a>.
+          <p></p>    
+          These reports provide a learning opportunity to the paddling community, and facilitate dialogue with river managers and decision makers.
+          <p></p>  
+          The goal of this repository is to identify factors that can turn a near miss into a fatality, hopefully reducing tragedies and statistics alike.
+        </p>
+
+      <h2 id="purpose">Purpose</h2>
+        <p>
+          The purpose of this analysis is to identify risk factors in whitewater recreation that can turn near misses into fatalities.
+        </p>
+
+      <h2 id="data">Data</h2>
+        <p>
+          The database is created from a combination of user submitted forms and web-scrapped articles. As such, it is supremely messy. 
+          <center>
+            <img src="static/images/messy_data.png" width="80%">
+          </center>
+        </p>
+        <p>
+          After deleting personal information, all text features (river, section, location, waterlevel, and cause) are combined into the description column. 
+          </p><p>
+          In addition to the written narrative, this analysis focuses on:
+        </p>
+        <p>
+          <ul>
+          <li>State (location)</li>
+          <li>River level</li>
+          <li>River difficulty</li>
+          <li>Victim age</li>
+          <li>Kayaking</li>
+          <li>Commercial</li>
+          <li>Experience</li>
+          <li>Type of accident
+            <ul>
+            <li>Fatality</li>
+            <li>Medical (near miss)</li>
+            <li>Injury (near miss)</li>
+            </ul>
+          </li>
+          </ul>
+        </p>
+      <p>
+        The ordinal features: river level (Low, Medium, High, and Flood), river difficulty (I, II, III, IV, V), and victim skill (Inexperienced, Some experience, Experienced, Expert) are mapped linearly to integers.
+        </p><p>
+        Type of watercraft is mapped to kayak (1) or not.
+        </p><p>
+        Trip type are mapped to commercial (1) or not.
+        </p><p>
+        Given an unreasonable number of 0 year olds with contradictory description entries, ages equal to 0 are dropped.
+      </p>
+
+
+
+      <h2 id="nlp">Natural Language Processing</h2>
+      <h4>Cleaning</h4>    
+        <p>
+          Because the descriptions of accidents are aggregated from both external websites and user submitted   forms, the documents have very inconsistent structure.
+        </p><p>
+          All documents have some level of html embedded in them, and some are actually in `json`. The first step in the text analysis is to convert each document into one long string. The strings are then tokenized   with a purpose-built function. <a href=https://spacy.io>Spacy's</a> english stop words are used as a base to start. Because of inconsistent description tense, the documents are lemmatized into their root words before being vectorized into either a tf-idf or term frequency matrix.
+        </p>
+        <p>
+          Once vectorized, the matrix is clustered with the k-means algorithm. The underlying structure reveals documents with high  percentages of html words. The top words for those html clusters are added to the stopwords, and the  process is repeated until salient, clean clusters emerge.
+        </p>
+
+      <h4>Latent Diriclet Allocation</h4>
+        <p>
+          LDA does not illuminate any underlying structure. Indeed, less than 0.1% of the variance is explained in the first 8 components.
+        </p>
+
+      <h4>Principal Component Analysis</h4>
+        <p>
+          Similar to LDA, PCA fails to provide new information.
+          <p></p>
+          Below, the first two components are plotted with each accident labeled as a fatality, injury, or a medical emergency.
+          <center>
+            <img src="static/images/pca_targets_idf.png" width="80%">
+          </center>
+        </p>
+
+      <h4>Description Length</h4>
+        <p>
+          Interstingly, as the descriptions of accidents become longer, a higher proportion of accidents are fatal.
+          <center>
+            <img src="static/images/description_len_death.png" width="80%">
+          </center>
+        </p>
+       
+        <h4>Geographic Distribution</h4>
+        <p>
+          The number of accidents is likely proportional to the amount of whitewater recreation in a given state.
+          <center>
+            <a href="/map"><img src="static/images/map.png" width="80%"></a>
+          </center>
+        </p>
+
+      <h2 id="supervised">Supervised Learning</h2>
+        <p>
+          Sklearn grid searching with k-folds cross validation is used to find the best hyperparameters for each model. Models are tested on classification into three groups (Fatality, Injury, Medical) as well as Fatal or Near Miss. When possible, performance between Tf-idf and tf matrices is compared. Final performance is judged on a holdout data set. For simplicity and interpretability, only the binary classification results are shown.
+        </p>
+      
+      <h2 id="text">Text Classification</h2>
+        <center>
+        <img src="static/images/boosting_n_score.png" width="80%">
+        </center>
+      <h4>Bagging</h4>
+        <p>
+          Below are the most important words for predicting the outcome of an accident. It is worth noting that the model does not assert a positive or negative correlation, just predictive importance.
+        </p>
+          <center>
+            <img src="static/images/bagging_features_horiz.png" width="80%">
+          </center>
+      <h4>Naive Bayes</h4>
+      <p>        
+        After fitting a Naive Bayes model to the training data, for each category of incident, the top 100 words that made each category more and less likely are generated. Below is a curated subset of those lists.
+        </p>
+        <center>
+        <table style="width: 30%; border: 1px solid grey">
+          <tr>
+            <th style="width: 2cm;"></th>
+            <th>Increase Liklihood</th>
+            <th>Decrease Liklihood</th>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <th>Medical</th>
+            <td>kayaker overdose, new, head, alcohol, xanax, tramadol, fall, rope</td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Injury</th>
+            <td>man, pin, foot, strainer, group, kayaker, march</td>
+            <td>farmer wetsuit, near drowning, new york, large kayak</td>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <th>Fatality</th>
+            <td>rock, dam, drown, pin, get help, search, rescue, time, large flow</td>
+            <td>competent group, thank, support, train, feel emotion, professional sar, respond</td>
+          </tr>
+        </table>
+      </center>
+        <p></p>
+        <p>
+          Below, mock descriptions were fed into the naive bayes model with the resulting predictions.
+        </p><p>
+          <code>
+          There was a diabetic on our trip. He forgot his insulin. He ended up in DKA, so we pulled off of the the riveLuckily we had cell service, so we called 911. He got rushed to the ER, but the docs said he'd be okay even though he had been near death earlier that day. Another person on the trip was doing a bunch of drugs like xanax, accutane, tramadol and propecia. What a combo! They ended up falling in the river.
+          </code>
+        </p>
+        <center>
+          <table style="width: 30%; border: 1px solid gray;">
+            <tr>
+            <th></th>
+            <th>Medical</th>
+            <th>Injury</th>
+            <th>Fatality</th>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <th>Predicted Probaility</th>
+            <td>99.9%</td>
+            <td>0.0%</td>
+            <td>0.0%</td>
+          </tr>
+        </table>
+        </center>
+        <p></p>
+        <code>
+          It was the end of the day, and everyone was tired. The raft guide decided to drop into the last hole sideways, and dump trucked everyone into the river. There wasn't much rapid left at the point but most people found a rock or two to hit. Sarah bruised her leg. Sam hit his head. I got my foot trapped in the webbing of raft. Everyone was okay, but a few of us had to get stitches.
+        </code>
+        <center>
+          <table style="width: 30%; border: 1px solid gray;">
+            <tr>
+            <th></th>
+            <th>Medical</th>
+            <th>Injury</th>
+            <th>Fatality</th>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <th>Predicted Probaility</th>
+            <td>0.1%</td>
+            <td>0.1%</td>
+            <td>99.8%</td>
+          </tr>
+        </table>
+        </center>
+        <p></p>
+        <code>
+          It could have been a good day of kayaking. The water levels were very high, but everyone was stoked. On the first rapid Jack capsized and swam into a strainer. Meanwhile, Jill got pinned in a sieve. Both spent about 10 minutes underwater before we could get to them. We performed CPR, but they we both blue. We called the sheriff, the ambulance came, and we cried a bunch.
+        </code>
+        <center>
+        <table style="width: 30%; border: 1px solid gray;">
+          <tr>
+            <th></th>
+            <th>Medical</th>
+            <th>Injury</th>
+            <th>Fatality</th>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <th>Predicted Probaility</th>
+            <td>0.25%</th>
+            <td>0.15%</th>
+            <td>99.6%</th>
+          </tr>
+        </table>
+        </center>
+        <p></p>
+
+      <h2 id="log">Classification</h2>
+      <h4>Logistic Regression</h4>
+      <p>
+        A simple logistic model is fitted on the non-text features. This model performs better than the text analysis. After removing features without predictive strength, the coefficients and their p-values are listed below. The variance inflation factors are all 1.3 or below.
+      </p>
+      <center>
+        <table style="width: 30%; border: 1px solid gray;">
+          <tr>
+          <th>Predictor</th>
+          <th>Coefficient</th>
+          <th>p-value</th>
+        </tr>
+        <tr style="background-color: lightgray;">
+          <td>River Level</td>
+          <td>0.27</td>
+          <td>0.050</td>
+        </tr>
+        <tr>
+          <td>River Difficulty</td>
+          <td>0.45</td>
+          <td>0.003</td>
+        </tr>
+        <tr style="background-color: lightgray;">
+          <td>Paddler Experience</td>
+          <td>-0.34</td>
+          <td>0.034</td>
+        </tr>
+      </table>
+      </center>
+
+      <h4>Stacked Model</h4>
+      <p>
+      Adding the Naive Bayes prediction as a feature in the logistic model, oddly, decreases performance.
+      </p>
+      <h2 id"performance>Model Performance</h2>
+      <center>
+        <table style="width: 30%; border: 1px solid gray;">
+          <tr style="background-color: lightgray;">
+            <th>Model</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>Accuracy</th>
+          </tr>
+          <tr>
+            <td>AdaBoost</td>
+            <td>86%</td>
+            <td>92%</td>
+            <td>86%</td>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <td>Bagging</td>
+            <td>87%</td>
+            <td>92%</td>
+            <td>87%</td>
+          </tr>
+          <tr>
+            <td>Naive Bayes</td>
+            <td>76%</td>
+            <td>95%</td>
+            <td>79%</td>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <td>Random Forest (NLP)</td>
+            <td>77%</td>
+            <td>98%</td>
+            <td>81%</td>
+          </tr>
+          <tr>
+            <td>Random Forest (Numerical)</td>
+            <td>87%</td>
+            <td>97%</td>
+            <td>87%</td>
+          </tr>
+          <tr style="background-color: lightgray;">
+            <td>Logistic Classification</td>
+            <td>92%</td>
+            <td>100%</td>
+            <td>92%</td>
+          </tr>
+          <tr>
+            <td>Stacked Classification</td>
+            <td>88%</td>
+            <td>92%</td>
+            <td>84%</td>
+          </tr>
+        </table>
+      </center>
+
+      <h2 id="conclusions">Conclusions</h2>
+      <p>
+        Combining the information from clustering, topic modeling, natural language processing, and logistic modeling, a few conclusions can be made. However, mostly the data supports existing knowledge in the whitewater community.
+      </p>
+      <center>
+      <img src="static/images/level_diff_death_2.png" width="80%">
+      <img src="static/images/exper_age_death.png" width="80%">
+      </center>
+      <li>Competent group - more than any other, this phrase decreased the likelihood of a prediction for death. Always make sure that your whole group is skilled enough and prepared for the river.</li>
+      <li>Wetsuits reduce the liklihood of injury</li>
+      <li>Dams (clustered with low, head) are more deadly</li>
+      <li>Rivers tend to become more lethal as the water level increases</li>
+      <li>Rivers tend to become more lethal as their difficulty increases</li>
+      <li>As paddler experience increases, the liklihood of fatality decreases</li>
+      <li>Age (above 10 years old), type of watercraft, and being on a commercial trip do not change the prediction of a fatality</li>
+      <li>84% of the reported accidents where the victim is less than 18 years old are fatal</li>      
+
+      <h2>Further</h2>
+      <li>Further modification of the tokenization, lemmatization, and vectorization could improve the models.</li>
+      <li>More models could be tried, such as a MLP and BERT</li>
+      <li>Stay safe out there!</li>
+    </div><!-- /.container -->
+ 
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../static/js/jquery.min.js"><\/script>')</script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

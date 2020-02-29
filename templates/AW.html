@@ -54,8 +54,7 @@
       </div>
     </nav>
 
-    <div class="container">
-
+    <div class="container-fluid">
       <h2 id="background">Background</h2>    
         <p>
           The American Whitewater Accident Database catalogs over 2,400 fatalities and close calls on whitewater rivers dating back to 1972.
@@ -119,7 +118,7 @@
         <p>
           Because the descriptions of accidents are aggregated from both external websites and user submitted   forms, the documents have very inconsistent structure.
         </p><p>
-          All documents have some level of html embedded in them, and some are actually in `json`. The first step in the text analysis is to convert each document into one long string. The strings are then tokenized   with a purpose-built function. <a href=https://spacy.io>Spacy's</a> english stop words are used as a base to start. Because of inconsistent description tense, the documents are lemmatized into their root words before being vectorized into either a tf-idf or term frequency matrix.
+          All documents have some level of html embedded in them, and some are actually in `json`. The first step in the text analysis is to convert each document into one long string. The strings are then tokenized   with a purpose-built script. <a href=https://spacy.io>Spacy's</a> english stop words are used as a base to start. Because of inconsistent description tense, the documents are lemmatized into their root words before being vectorized into either a tf-idf or term frequency matrix.
         </p>
         <p>
           Once vectorized, the matrix is clustered with the k-means algorithm. The underlying structure reveals documents with high  percentages of html words. The top words for those html clusters are added to the stopwords, and the  process is repeated until salient, clean clusters emerge.
@@ -127,9 +126,9 @@
 
       <h4>Latent Diriclet Allocation</h4>
         <p>
-          LDA does not illuminate any underlying structure. Indeed, less than 0.1% of the variance is explained in the first 8 components.
+          LDA does not illuminate any underlying structure.
         </p>
-      <div class="starter-template">
+      <div class="container-fluid">
         <center>
           <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css">
           <div id="ldavis_el5944351199856169526669406"></div>
@@ -174,7 +173,7 @@
 
       <h4>Principal Component Analysis</h4>
         <p>
-          Similar to LDA, PCA fails to provide new information.
+          Similar to LDA, PCA fails to provide new information. Indeed, less than 0.1% of the variance is explained in the first 8 components.
           <p></p>
           Below, the first two components are plotted with each accident labeled as a fatality, injury, or a medical emergency.
           <center>
@@ -184,7 +183,7 @@
 
       <h4>Description Length</h4>
         <p>
-          Interstingly, as the descriptions of accidents become longer, a higher proportion of accidents are fatal.
+          As expected, as the descriptions of accidents become longer, a higher proportion of accidents are fatal.
           <center>
             <img src="static/images/description_len_death.png" width="80%">
           </center>
@@ -192,7 +191,7 @@
        
         <h4>Geographic Distribution</h4>
         <p>
-          Interstingly, as the descriptions of accidents become longer, a higher proportion of accidents are fatal.
+          The number of accidents is likely proportional to the amount of whitewater recreation in a given state.
           <center>
             <a href="/map"><img src="static/images/map.png" width="80%"></a>
           </center>
@@ -217,32 +216,34 @@
       <h4>Naive Bayes</h4>
       <p>        
         After fitting a Naive Bayes model to the training data, for each category of incident, the top 100 words that made each category more and less likely are generated. Below is a curated subset of those lists.
-        </p>
-        <center>
-        <table style="width: 30%; border: 1px solid grey">
+      </p>
+      
+      <table class="table" style="width: 75%">
+        <thead class="thead-dark">
           <tr>
-            <th style="width: 2cm;"></th>
-            <th>Increase Liklihood</th>
-            <th>Decrease Liklihood</th>
+            <th ></th>
+            <th >Increase Liklihood</th>
+            <th >Decrease Liklihood</th>
           </tr>
-          <tr style="background-color: lightgray;">
-            <th>Medical</th>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Medical</th>
             <td>kayaker overdose, new, head, alcohol, xanax, tramadol, fall, rope</td>
             <td></td>
           </tr>
           <tr>
-            <th>Injury</th>
+            <th scope="row">Injury</th>
             <td>man, pin, foot, strainer, group, kayaker, march</td>
             <td>farmer wetsuit, near drowning, new york, large kayak</td>
           </tr>
-          <tr style="background-color: lightgray;">
-            <th>Fatality</th>
+          <tr>
+            <th scope="row">Fatality</th>
             <td>rock, dam, drown, pin, get help, search, rescue, time, large flow</td>
             <td>competent group, thank, support, train, feel emotion, professional sar, respond</td>
           </tr>
-        </table>
-      </center>
-        <p></p>
+        </tbody>
+      </table>
         <p>
           Below, mock descriptions were fed into the naive bayes model with the resulting predictions.
         </p><p>
@@ -395,9 +396,32 @@
           </tr>
         </table>
       </center>
+
+      <h2 id="conclusions">Conclusions</h2>
+      <p>
+        Combining the information from clustering, topic modeling, natural language processing, and logistic modeling, a few conclusions can be made. However, mostly the data supports existing knowledge in the whitewater community.
+      </p>
+      <center>
+      <img src="static/images/level_diff_death_2.png" width="80%">
+      <img src="static/images/exper_age_death.png" width="80%">
+      </center>
+      <li>Competent group - more than any other, this phrase decreased the likelihood of a prediction for death. Always make sure that your whole group is skilled enough and prepared for the river.</li>
+      <li>Wetsuits reduce the liklihood of injury</li>
+      <li>Dams (clustered with low, head) are more deadly</li>
+      <li>Rivers tend to become more lethal as the water level increases</li>
+      <li>Rivers tend to become more lethal as their difficulty increases</li>
+      <li>As paddler experience increases, the liklihood of fatality decreases</li>
+      <li>Age (above 10 years old), type of watercraft, and being on a commercial trip do not change the prediction of a fatality</li>
+      <li>84% of the reported accidents where the victim is less than 18 years old are fatal</li>      
+      <li>Be weary of the "first major rapid" on any run</li>
+
+
+      <h2>Further</h2>
+      <li>Further modification of the tokenization, lemmatization, and vectorization could improve the models.</li>
+      <li>More models could be tried, such as a MLP and BERT</li>
+      <li>Stay safe out there!</li>
     </div><!-- /.container -->
-
-
+ 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
