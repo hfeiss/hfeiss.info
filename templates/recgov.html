@@ -54,7 +54,8 @@
       </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="max-width: 10in">
+        <p></p>
       <center>
       <img src="static/images/lookout.jpg" width="100%" class="img-fluid">
       </center> 
@@ -108,23 +109,23 @@
         <p>
             EDA reveals relatively messy data. Of the 29,055,989 reservations, 12 columns have data in less than 1% of the rows. Many usefull columns are 60% null.
           <center>
-            <img src="static/images/nulls.png" width="60%" class="img-fluid">
+            <img src="static/images/nulls.png" width="100%" class="img-fluid">
           </center>
         </p>
         <p>
             Interestingly, <code>Marinaboat</code> has only one non-null value in all of the years. Further, that one non-null is not boolean:
         <center>
-        <img src="static/images/marinaboat.png" width="60%" class="img-fluid">
+        <img src="static/images/marinaboat.png" width="100%" class="img-fluid">
         </center>    
         </p><p>
             Also, it is doubtful that someone parked their boat 5 miles inland at <a href="https://www.recreation.gov/ticket/facility/253731">Haleakala National Park's sunrise hike:</a>
             <center>
-                <img src="static/images/marinaboat.jpg" width="60%" class="img-fluid">
+                <img src="static/images/marinaboat.jpg" width="100%" class="img-fluid">
             </center> 
         </p><p>
             Formatting within the columns is mostly consistent, but does require type casting, truncation, and removing impurities.
             <center>
-                <img src="static/images/baddata.png" width="60%" class="img-fluid">
+                <img src="static/images/baddata.png" width="100%" class="img-fluid">
             </center> 
         </p><p>
             For most queries, 35% of the data is removed for either formating or nulls. For sorting by <code>FacilityZIP</code>, an unfortunate 60% is removed due to nulls, but typically at least 1 million rows remain in each year's data.
@@ -149,7 +150,7 @@
             For first analysis, a histogram of the duration of stays is created. This histogram is used to decide the two <code>LengthOfStay</code> bins: weekend trips and trips longer than two nights; roughly half of the reservations belong in each category.
         </p>
             <center>
-            <img src="static/images/HistogramOfNights.png" width="60%" class="img-fluid">
+            <img src="static/images/HistogramOfNights.png" width="100%" class="img-fluid">
             </center>
         <p>
             One's intuition is likely correct here. Reservations are usually two nights: the length of a weekend. Counts rapidly decline until another steep drop between 7 and 8 nights: the length of a week. Finally, there's a small spike at 14 nights: the maximum length of stay at most facilities.
@@ -175,7 +176,7 @@
             That being said, the statistical distribution of the <em>averages for each year</em>     do appear to differ with a pseudo p value of = 0.016
         </p>
         <center>
-            <img src="static/images/hypothesistest.png" width="60%" class="img-fluid">
+            <img src="static/images/hypothesistest.png" width="100%" class="img-fluid">
         </center>
         <p>
             These results are counterintuitive; it seems people travel longer the shorter the stay. A further complication is that driving 650 miles one way for "weekend warrior" trip is very unrealistic.
@@ -185,7 +186,7 @@
             The large proportion of reservations made for RV's and other motorized transport adds evidence to this notion.
         </p><p>
             <center>
-                <img src="static/images/TypeOverTime.png" width="60%" class="img-fluid">
+                <img src="static/images/TypeOverTime.png" width="100%" class="img-fluid">
             </center>   
         </p>
 
@@ -196,7 +197,7 @@
             Furthermore, on average, reservations made from the North East and Florida<sup><a href="#myfootnote2">[2]</a></sup> are for a distance of greater than 1,000 miles. The .gif below shows the average reservation distance grouped by customer state: the distance someone travels based on where they live.
         </p><p>
             <center>
-                <img src="static/images/CustomerState.gif" width="60%" class="img-fluid">
+                <img src="static/images/CustomerState.gif" width="100%" class="img-fluid">
             </center>   
         </p>
         <h5>Distance by Destination's State</h5>
@@ -204,13 +205,13 @@
             Lastly, the .gif below shows the average reservation's distance, grouped by the facility's state: how far one is willing to travel to a state given the camping oportunities in that state.
         </p><p>
             <center>
-                <img src="static/images/FacilityState.gif" width="60%" class="img-fluid">
+                <img src="static/images/FacilityState.gif" width="100%" class="img-fluid">
             </center>   
         </p><p>
             Year after year, reservations are made from across the world to visit Alaska and Arizona (or more accurately, the Grand Canyon).
         </p><p>
             <center>
-                <img src="static/images/manko.jpg" width="60%" class="img-fluid">
+                <img src="static/images/manko.jpg" width="100%" class="img-fluid">
             </center>   
         </p>
 
