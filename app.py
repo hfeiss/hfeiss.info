@@ -1,7 +1,7 @@
 # Demonstrates Bootstrap version 3.3 Starter Template
 # available here: https://getbootstrap.com/docs/3.3/getting-started/#examples
 
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file
 from filepaths import Root
 
 
@@ -44,6 +44,15 @@ def map():
 def recgov():
     return render_template('recgov.html')
 
+
+@app.route('/sendresume')
+def sendresume():
+    try:
+        return send_file('static/images/HunterFeissDataScientist.pdf',
+                         attachment_filename='HunterFeissDataScientist.pdf',
+                         as_attachment=True)
+    except Exception as e:
+        return str(e)
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=8080, threaded=True, debug=False, ssl_context = context)
